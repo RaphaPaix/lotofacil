@@ -10,6 +10,36 @@ public class Vetor {
 	Scanner scanner = new Scanner(System.in);
 	
 	int[] combinacao = new int[15];
+	float total;
+	float variacao;
+	float quadradoVariacao;
+	
+	
+	
+
+	public float getQuadradoVariacao() {
+		return quadradoVariacao;
+	}
+
+	public void setQuadradoVariacao(float quadradoVariacao) {
+		this.quadradoVariacao = quadradoVariacao;
+	}
+
+	public float getVariacao() {
+		return variacao;
+	}
+
+	public void setVariacao(float variacao) {
+		this.variacao = variacao;
+	}
+
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
 
 	public int[] getCombinacao() {
 		return combinacao;
@@ -19,6 +49,12 @@ public class Vetor {
 		this.combinacao = combinacao;
 	}
 	
+	public float calcularTotalVetor() {
+		for(int i=0;i<15;i++) {
+			this.total=this.total+this.combinacao[i];
+		}
+		return this.total;
+	}
 	
 	public boolean compararVetor(int[] vetor) {
 		int t=0;

@@ -11,36 +11,98 @@ import javax.swing.JOptionPane;
 
 public class Executar {
     final static List<int[]> list = new ArrayList<>();
+    final static List<Vetor>premiados=new ArrayList<Vetor>();
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		//adicionando as 3268760 combinaçoes
-		Thread threadTodos = new Thread(thread1);
-		threadTodos.start();
-		
-		//adicionando os premiados
-		List<Vetor>premiados=new ArrayList<Vetor>();
-		FileInputStream entradaPremiados = new FileInputStream(new File("C:\\Users\\Rapha\\git\\lotofacil\\lotofacil1\\src\\combinatorics\\premiados.txt"));
-		Scanner lerArquivo = new Scanner(entradaPremiados, "UTF-8");
-		
-		while(lerArquivo.hasNext()) {
-			String linha = lerArquivo.nextLine();
-			if(!linha.isEmpty()&&linha!=null) {
-				String[] dados = linha.split("\\;");
-				Vetor premiado = new Vetor();
-				int vetor[] = premiado.getCombinacao();
-				for(int i=0;i<15;i++) {
-					vetor[i]=Integer.parseInt(dados[i]);
+		//senha para autorizar a operação
+		String senha = JOptionPane.showInputDialog("DIGITE A SENHA PARA INICIAR A OPERAÇÃO");
+		if(senha.equalsIgnoreCase("kiara")) {
+			//adicionando as 3268760 combinaçoes
+			Thread threadTodos = new Thread(thread1);
+			threadTodos.start();
+			
+			//adicionando os premiados
+			FileInputStream entradaPremiados = new FileInputStream(new File("C:\\Users\\Rapha\\git\\lotofacil\\lotofacil1\\src\\combinatorics\\premiados.txt"));
+			Scanner lerArquivo = new Scanner(entradaPremiados, "UTF-8");
+			
+			while(lerArquivo.hasNext()) {
+				String linha = lerArquivo.nextLine();
+				if(!linha.isEmpty()&&linha!=null) {
+					String[] dados = linha.split("\\;");
+					Vetor premiado = new Vetor();
+					int vetor[] = premiado.getCombinacao();
+					for(int i=0;i<15;i++) {
+						vetor[i]=Integer.parseInt(dados[i]);
+					}
+					premiado.setCombinacao(vetor);
+					premiados.add(premiado);
 				}
-				premiado.setCombinacao(vetor);
-				premiados.add(premiado);
 			}
+			
+			
+			JOptionPane.showMessageDialog(null, "Lista de premiados carregada");
+			
+			//somando total de cada linha
+			for(int i=0;i<premiados.size();i++) {
+				Vetor premiado = new Vetor();
+				premiado=premiados.get(i);
+				float total=premiado.calcularTotalVetor();
+			}
+			
+			//calculando a média
+			float mediaTotalPremiados=0;
+			float totalPremiados=0;
+			for(int i=0;i<premiados.size();i++) {
+				totalPremiados=totalPremiados+premiados.get(i).getTotal();
+			}
+			mediaTotalPremiados=(totalPremiados/premiados.size());
+			System.out.println("Media dos totais de cada linha = "+mediaTotalPremiados);
+			
+			//frequencia da media (intervalo +-)
+			int mediaTotalPremiadosInteiro = (int)mediaTotalPremiados;
+			int frequencia=0;
+			for(int i=0;i<premiados.size();i++) {
+				if(premiados.get(i).getTotal()>=(mediaTotalPremiadosInteiro-3)
+						&&premiados.get(i).getTotal()<=(mediaTotalPremiadosInteiro+3)) {
+					frequencia++;
+				}
+			}
+			System.out.println("Em um intervalo de -3 a 3, a média tem a frequencia de "+frequencia);
+			int porcentagemFrequencia = (frequencia*100)/premiados.size();
+			System.out.println("Em porcentagem, a frequência tem o valor de: "+porcentagemFrequencia+"%");
+			
+			//calculo desvio padrao da media
+			//primeiro obter a variaçao de x (xi - xmedia) e a soma dos quadrados
+			for(int i=0;i<premiados.size();i++) {
+				float variacao = (premiados.get(i).getTotal()-mediaTotalPremiados);
+				premiados.get(i).setVariacao(variacao);
+				float quadradoVariacao = variacao*variacao;
+				premiados.get(i).setQuadradoVariacao(quadradoVariacao);
+			}
+			//soma dos quadrados da variacao:
+			float somaQuadradosVariacao=0;
+			for(int i=0;i<premiados.size();i++) {
+				somaQuadradosVariacao=somaQuadradosVariacao+premiados.get(i).getQuadradoVariacao();
+			}
+			//calculos para obter o desvio padrao
+			float desvioPadraoMediaSemRaiz=(somaQuadradosVariacao/(premiados.size()*(premiados.size()-1)));
+			
+			
+			float desvioPadraoMedia=(float) Math.sqrt(desvioPadraoMediaSemRaiz);
+			//testando:
+			//System.out.println("Variacao da linha 1 = "+premiados.get(0).getVariacao());
+			//System.out.println("Quadrado da variacao da linha 1 = "+premiados.get(0).getQuadradoVariacao());
+			//System.out.println("Soma dos quadrados das variaçoes = "+somaQuadradosVariacao);
+			System.out.println("Desvio padrão da média = "+desvioPadraoMedia);
+			
+			
+			
+			
+			
+			
+		}else {
+			JOptionPane.showMessageDialog(null, "SENHA INCORRETA");
 		}
-		
-		
-		JOptionPane.showMessageDialog(null, "Lista de premiados carregada");
-		
-		//testando pra ver se adicionou
-		System.out.println(premiados.get(0));
 		
 	}
 	
