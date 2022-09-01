@@ -16,11 +16,13 @@ public class AdicionarPremiados {
 		totalPremiados=Integer.parseInt(JOptionPane.showInputDialog("Quantos premiados quer adicionar no arquivo texto?"));
 		JOptionPane.showMessageDialog(null, "Copie e cole os premiados no console");
 		System.out.println("Copie e cole os premiados abaixo: ");
+		//esse processo ta demorando, consertar
 		for(int i=0;i<totalPremiados;i++) {
 			Vetor premiado = new Vetor();
 			premiado.digitarVetor();
 			premiados.add(premiado);
 		}
+		System.out.println("Premiados adicionados, agora passando para o arquivo TXT");
 		File arquivo = new File("C:\\Users\\Rapha\\git\\lotofacil\\lotofacil1\\src\\combinatorics\\premiados.txt");
 		if(!arquivo.exists()) { 
 			arquivo.createNewFile();

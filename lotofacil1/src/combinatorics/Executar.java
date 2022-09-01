@@ -10,29 +10,12 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Executar {
+    final static List<int[]> list = new ArrayList<>();
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		//adicionando as 3268760 combinaçoes
-        List<int[]> list = new ArrayList<>();
-        ArrayList<Vetor>Todos=new ArrayList<>();
-        int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
-        combinations15(arr,list);
-        listToString(list);
-        /*
-        int x=0;
-        for(int a = 0; a<list.size(); a++){ //iterate through list
-            Vetor todos = new Vetor();
-            int[] vetor = new int[15];
-            vetor=list.get(a);
-            todos.setCombinacao(vetor);
-            Todos.add(todos);
-            x++;
-        }
-        */
-        JOptionPane.showMessageDialog(null, (list.size()+" combinações encontradas"));
-		
-		
-		
+		Thread threadTodos = new Thread(thread1);
+		threadTodos.start();
 		
 		//adicionando os premiados
 		List<Vetor>premiados=new ArrayList<Vetor>();
@@ -54,9 +37,8 @@ public class Executar {
 		}
 		
 		
-		for (Vetor vetor : premiados) {
-			vetor.imprimirVetor();
-		}
+		JOptionPane.showMessageDialog(null, "Lista de premiados carregada");
+		
 		
 	}
 	
@@ -84,4 +66,19 @@ public class Executar {
                                                                 for(int o = n+1; o<arr.length; o++)
      list.add(new int[]{arr[a],arr[b],arr[c],arr[d],arr[e],arr[f],arr[g],arr[h],arr[i],arr[j],arr[k],arr[l],arr[m],arr[n],arr[o]});
     }
+	
+	public static Runnable thread1 = new Runnable() {
+		
+		@Override
+		public void run() {
+
+	        ArrayList<Vetor>todasCombinacoes=new ArrayList<>();
+	        int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+	        combinations15(arr,list);
+	        listToString(list);
+	        JOptionPane.showMessageDialog(null, (list.size()+" combinações encontradas"));
+		
+		}
+	};
+
 }
