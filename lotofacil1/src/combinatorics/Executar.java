@@ -39,6 +39,8 @@ public class Executar {
 		
 		JOptionPane.showMessageDialog(null, "Lista de premiados carregada");
 		
+		//testando pra ver se adicionou
+		System.out.println(premiados.get(0));
 		
 	}
 	

@@ -19,11 +19,6 @@ public class Vetor {
 		this.combinacao = combinacao;
 	}
 	
-	public void digitarVetor(){
-		for(int i=0;i<15;i++) {
-			this.combinacao[i]=scanner.nextInt();
-		}
-	}
 	
 	public boolean compararVetor(int[] vetor) {
 		int t=0;

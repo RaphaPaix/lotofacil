@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -12,6 +13,7 @@ public class AdicionarPremiados {
 	public static void main(String[] args) throws IOException {
 		
 		List<Vetor>premiados=new ArrayList<Vetor>();
+		Scanner scanner = new Scanner(System.in);
 		int totalPremiados;
 		totalPremiados=Integer.parseInt(JOptionPane.showInputDialog("Quantos premiados quer adicionar no arquivo texto?"));
 		JOptionPane.showMessageDialog(null, "Copie e cole os premiados no console");
@@ -19,7 +21,11 @@ public class AdicionarPremiados {
 		//esse processo ta demorando, consertar
 		for(int i=0;i<totalPremiados;i++) {
 			Vetor premiado = new Vetor();
-			premiado.digitarVetor();
+			int[] combinacao = new int[15];
+			for(int j=0;j<15;j++) {
+				combinacao[j]=scanner.nextInt();
+			}
+			premiado.setCombinacao(combinacao);
 			premiados.add(premiado);
 		}
 		System.out.println("Premiados adicionados, agora passando para o arquivo TXT");
