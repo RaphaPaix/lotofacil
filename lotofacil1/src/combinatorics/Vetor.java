@@ -46,7 +46,12 @@ public class Vetor {
 		return "Vetor [combinacao=" + Arrays.toString(combinacao) + "]";
 	}
 	
-	
+	public void imprimirVetor() {
+		for(int i=0;i<15;i++) {
+			System.out.printf(" %d",this.combinacao[i]);
+		}
+		System.out.println("");
+	}
 	
 	
 	
